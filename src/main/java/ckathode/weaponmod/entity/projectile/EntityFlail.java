@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityFlail extends EntityMaterialProjectile {
@@ -67,7 +67,7 @@ public class EntityFlail extends EntityMaterialProjectile {
             }
 
             if (shootingEntity instanceof EntityPlayer) {
-                ItemStack itemstack = ((EntityPlayer) shootingEntity).getCurrentEquippedItem();
+                ItemStack itemstack = ((EntityPlayer) shootingEntity).getActiveItemStack();
                 if (itemstack == null || thrownItem != null && itemstack.getItem() != thrownItem.getItem()) {
                     pickUpByOwner();
                 }

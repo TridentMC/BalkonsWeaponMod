@@ -4,7 +4,7 @@ import ckathode.weaponmod.ReloadHelper;
 import ckathode.weaponmod.entity.projectile.EntityBlunderShot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class RangedCompBlunderbuss extends RangedComponent {

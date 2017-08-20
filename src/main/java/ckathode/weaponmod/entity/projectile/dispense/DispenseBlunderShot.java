@@ -7,6 +7,7 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 
 import java.util.Random;
 
@@ -19,9 +20,9 @@ public class DispenseBlunderShot extends BehaviorDefaultDispenseItem {
 
     @Override
     public ItemStack dispenseStack(IBlockSource blocksource, ItemStack itemstack) {
-        EnumFacing face = EnumFacing.getFront(blocksource.getBlockMetadata());
+        EnumFacing face = EnumFacing.getFront(blocksource.getBlockState().getBlock().getMetaFromState(blocksource.getBlockState()));
 
-        IPosition pos = BlockDispenser.func_149939_a(blocksource);
+        IPosition pos = BlockDispenser.getDispensePosition(blocksource);
         EntityBlunderShot.fireFromDispenser(blocksource.getWorld(), pos.getX() + face.getFrontOffsetX(), pos.getY() + face.getFrontOffsetY(), pos.getZ() + face.getFrontOffsetZ(), face.getFrontOffsetX(), face.getFrontOffsetY(), face.getFrontOffsetZ());
         itemstack.splitStack(1);
         return itemstack;
@@ -29,13 +30,14 @@ public class DispenseBlunderShot extends BehaviorDefaultDispenseItem {
 
     @Override
     protected void playDispenseSound(IBlockSource blocksource) {
-        blocksource.getWorld().playSoundEffect(blocksource.getX(), blocksource.getY(), blocksource.getZ(), "random.explode", 3.0F, 1.0F / (rand.nextFloat() * 0.4F + 0.6F));
+        //TODO: idk how sounds work
+        //blocksource.getWorld().playSoundEffect(blocksource.getX(), blocksource.getY(), blocksource.getZ(), "random.explode", 3.0F, 1.0F / (rand.nextFloat() * 0.4F + 0.6F));
     }
 
     @Override
     protected void spawnDispenseParticles(IBlockSource blocksource, EnumFacing face) {
         super.spawnDispenseParticles(blocksource, face);
-        IPosition pos = BlockDispenser.func_149939_a(blocksource);
-        blocksource.getWorld().spawnParticle("flame", pos.getX() + face.getFrontOffsetX(), pos.getY() + face.getFrontOffsetY(), pos.getZ() + face.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
+        IPosition pos = BlockDispenser.getDispensePosition(blocksource);
+        blocksource.getWorld().spawnParticle(EnumParticleTypes.FLAME, pos.getX() + face.getFrontOffsetX(), pos.getY() + face.getFrontOffsetY(), pos.getZ() + face.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
     }
 }

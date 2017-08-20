@@ -2,9 +2,9 @@ package ckathode.weaponmod.render;
 
 import ckathode.weaponmod.item.IItemWeapon;
 import ckathode.weaponmod.item.RangedComponent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public class GuiOverlayReloaded extends Gui {
 
         EntityPlayer p = mc.thePlayer;
         if (p != null) {
-            ItemStack is = p.getCurrentEquippedItem();
+            ItemStack is = p.getActiveItemStack();
             if (is != null && is.getItem() instanceof IItemWeapon && ((IItemWeapon) is.getItem()).getRangedComponent() != null) {
                 RangedComponent rc = ((IItemWeapon) is.getItem()).getRangedComponent();
                 boolean rld = RangedComponent.isReloaded(is);

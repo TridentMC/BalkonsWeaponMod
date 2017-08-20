@@ -1,9 +1,11 @@
 package ckathode.weaponmod.entity.projectile;
 
 import ckathode.weaponmod.BalkonsWeaponMod;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.fml.common.registry.IThrowableEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -14,11 +16,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S2BPacketChangeGameState;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -283,16 +280,16 @@ public abstract class EntityProjectile extends EntityArrow implements IThrowable
         }
     }
 
-    public void onGroundHit(MovingObjectPosition mop) {
-        xTile = mop.blockX;
-        yTile = mop.blockY;
-        zTile = mop.blockZ;
-        inTile = worldObj.getBlock(xTile, yTile, zTile);
-        inData = worldObj.getBlockMetadata(xTile, yTile, zTile);
-        motionX = mop.hitVec.xCoord - posX;
-        motionY = mop.hitVec.yCoord - posY;
-        motionZ = mop.hitVec.zCoord - posZ;
-        float f1 = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
+    public void onGroundHit(RayTraceResult traceResult) {
+        xTile = traceResult.getBlockPos().getX();
+        yTile = traceResult.getBlockPos().getY();
+        zTile = traceResult.getBlockPos().getZ();
+        inTile = world.getBlockState(xTile, yTile, zTile);
+        inData = world.getBlockMetadata(xTile, yTile, zTile);
+        motionX = traceResult.hitVec.xCoord - posX;
+        motionY = traceResult.hitVec.yCoord - posY;
+        motionZ = traceResult.hitVec.zCoord - posZ;
+        float f1 = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ);
         posX -= motionX / f1 * 0.05D;
         posY -= motionY / f1 * 0.05D;
         posZ -= motionZ / f1 * 0.05D;
@@ -303,7 +300,7 @@ public abstract class EntityProjectile extends EntityArrow implements IThrowable
         playHitSound();
 
         if (inTile != null) {
-            inTile.onEntityCollidedWithBlock(worldObj, xTile, yTile, zTile, this);
+            inTile.onEntityCollidedWithBlock(world, xTile, yTile, zTile, this);
         }
     }
 

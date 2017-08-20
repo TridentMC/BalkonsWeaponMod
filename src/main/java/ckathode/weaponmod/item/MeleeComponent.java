@@ -3,8 +3,7 @@ package ckathode.weaponmod.item;
 import ckathode.weaponmod.PhysHelper;
 import ckathode.weaponmod.WeaponModAttributes;
 import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -18,6 +17,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MeleeComponent extends AbstractWeaponComponent {
     public final MeleeSpecs meleeSpecs;
@@ -61,12 +62,12 @@ public class MeleeComponent extends AbstractWeaponComponent {
             return meleeSpecs.blockDamage * 10F;
         }
         Material material = block.getMaterial();
-        return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : meleeSpecs.blockDamage;
+        return material != Material.PLANTS && material != Material.VINE && material != Material.CORAL && material != Material.LEAVES && material != Material.GOURD ? 1.0F : meleeSpecs.blockDamage;
     }
 
     @Override
     public boolean canHarvestBlock(Block block) {
-        return block == Blocks.web;
+        return block == Blocks.WEB;
     }
 
     @Override
@@ -110,13 +111,13 @@ public class MeleeComponent extends AbstractWeaponComponent {
     public void addItemAttributeModifiers(Multimap<String, AttributeModifier> multimap) {
         float dmg = getEntityDamage();
         if (dmg > 0F || meleeSpecs.damageMult > 0F) {
-            multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(weapon.getUUID(), "Weapon modifier", dmg, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(weapon.getUUID(), "Weapon modifier", dmg, 0));
         }
-        multimap.put(WeaponModAttributes.WEAPON_KNOCKBACK.getAttributeUnlocalizedName(), new AttributeModifier(weapon.getUUID(), "Weapon knockback modifier", meleeSpecs.getKnockBack(weaponMaterial) - 0.4F, 0));
-        multimap.put(WeaponModAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(weapon.getUUID(), "Weapon attack speed modifier", -meleeSpecs.attackDelay, 0));
+        multimap.put(WeaponModAttributes.WEAPON_KNOCKBACK.getName(), new AttributeModifier(weapon.getUUID(), "Weapon knockback modifier", meleeSpecs.getKnockBack(weaponMaterial) - 0.4F, 0));
+        multimap.put(WeaponModAttributes.ATTACK_SPEED.getName(), new AttributeModifier(weapon.getUUID(), "Weapon attack speed modifier", -meleeSpecs.attackDelay, 0));
         if (this instanceof IExtendedReachItem) {
             try {
-                multimap.put(WeaponModAttributes.WEAPON_REACH.getAttributeUnlocalizedName(), new AttributeModifier(weapon.getUUID(), "Weapon reach modifier", ((IExtendedReachItem) this).getExtendedReach(null, null, null) - 3F, 0));
+                multimap.put(WeaponModAttributes.WEAPON_REACH.getName(), new AttributeModifier(weapon.getUUID(), "Weapon reach modifier", ((IExtendedReachItem) this).getExtendedReach(null, null, null) - 3F, 0));
             } catch (NullPointerException e) {
             }
         }

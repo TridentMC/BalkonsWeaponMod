@@ -5,8 +5,6 @@ import ckathode.weaponmod.ReloadHelper;
 import ckathode.weaponmod.WeaponModAttributes;
 import ckathode.weaponmod.entity.projectile.EntityProjectile;
 import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -14,10 +12,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class RangedComponent extends AbstractWeaponComponent {
     protected static final int MAX_DELAY = 72000;
@@ -96,7 +98,7 @@ public abstract class RangedComponent extends AbstractWeaponComponent {
 
     @Override
     public void addItemAttributeModifiers(Multimap<String, AttributeModifier> multimap) {
-        multimap.put(WeaponModAttributes.RELOAD_TIME.getAttributeUnlocalizedName(), new AttributeModifier(weapon.getUUID(), "Weapon reloadtime modifier", rangedSpecs.getReloadTime(), 0));
+        multimap.put(WeaponModAttributes.RELOAD_TIME.getName(), new AttributeModifier(weapon.getUUID(), "Weapon reloadtime modifier", rangedSpecs.getReloadTime(), 0));
     }
 
     @Override
@@ -108,11 +110,11 @@ public abstract class RangedComponent extends AbstractWeaponComponent {
     public EnumAction getItemUseAction(ItemStack itemstack) {
         int state = ReloadHelper.getReloadState(itemstack);
         if (state == ReloadHelper.STATE_NONE) {
-            return EnumAction.block;
+            return EnumAction.BLOCK;
         } else if (state == ReloadHelper.STATE_READY) {
-            return EnumAction.bow;
+            return EnumAction.BOW;
         }
-        return EnumAction.none;
+        return EnumAction.NONE;
     }
 
     @Override
@@ -176,7 +178,9 @@ public abstract class RangedComponent extends AbstractWeaponComponent {
     }
 
     public void soundEmpty(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-        world.playSoundAtEntity(entityplayer, "random.click", 1.0F, 1.0F / 0.8F);
+        //TODO: Might or might not work.
+        world.playSound(entityplayer, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
+                SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F / 0.8F);
     }
 
     public void soundCharge(ItemStack itemstack, World world, EntityPlayer entityplayer) {
@@ -263,6 +267,7 @@ public abstract class RangedComponent extends AbstractWeaponComponent {
         private int reloadTime;
         private Item ammoItem;
         private String ammoItemTag;
+
         RangedSpecs(String ammoitemtag, String reloadtimetag, int durability, int stacksize) {
             ammoItemTag = ammoitemtag;
             reloadTimeTag = reloadtimetag;

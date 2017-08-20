@@ -285,7 +285,7 @@ public class EntityCannon extends EntityBoat {
 
     @Override
     public boolean interactFirst(EntityPlayer entityplayer) {
-        ItemStack itemstack = entityplayer.getCurrentEquippedItem();
+        ItemStack itemstack = entityplayer.getActiveItemStack();
         Item item = itemstack == null ? null : itemstack.getItem();
         if (item == BalkonsWeaponMod.cannonBall && !isLoaded() && !isLoading()) {
             if (entityplayer.inventory.consumeInventoryItem(Items.gunpowder)) {

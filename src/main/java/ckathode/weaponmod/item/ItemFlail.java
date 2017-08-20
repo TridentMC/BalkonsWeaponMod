@@ -2,8 +2,8 @@ package ckathode.weaponmod.item;
 
 import ckathode.weaponmod.PlayerWeaponData;
 import ckathode.weaponmod.entity.projectile.EntityFlail;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,7 +45,7 @@ public class ItemFlail extends WMItem {
         EntityPlayer player = ((EntityPlayer) entity);
         if (!PlayerWeaponData.isFlailThrown(player)) return;
 
-        ItemStack itemstack2 = player.getCurrentEquippedItem();
+        ItemStack itemstack2 = player.getActiveItemStack();
         if (itemstack2 == null || itemstack2.getItem() != this) {
             setThrown(player, false);
         } else {

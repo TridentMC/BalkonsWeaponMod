@@ -8,6 +8,7 @@ import ckathode.weaponmod.item.RangedComponent;
 import ckathode.weaponmod.network.MsgCannonFire;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,13 +20,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class WMClientEventHandler {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e) {
-        if (!e.player.worldObj.isRemote) {
+        if (!e.player.world.isRemote) {
             return;
         }
         if (e.phase == TickEvent.Phase.END) {
             if (e.player != null && e.player.swingProgressInt == 1) // Just swung
             {
-                ItemStack itemstack = e.player.getCurrentEquippedItem();
+                ItemStack itemstack = e.player.getActiveItemStack();
                 IExtendedReachItem ieri;
                 if (itemstack != null) {
                     if (itemstack.getItem() instanceof IExtendedReachItem) {
@@ -37,11 +38,11 @@ public class WMClientEventHandler {
                     }
 
                     if (ieri != null) {
-                        float reach = ieri.getExtendedReach(e.player.worldObj, e.player, itemstack);
-                        MovingObjectPosition mov = ExtendedReachHelper.getMouseOver(0, reach);
+                        float reach = ieri.getExtendedReach(e.player.world, e.player, itemstack);
+                        RayTraceResult rayTraceResult = ExtendedReachHelper.getMouseOver(0, reach);
 
-                        if (mov != null && mov.entityHit != null && mov.entityHit != e.player && mov.entityHit.hurtResistantTime == 0) {
-                            FMLClientHandler.instance().getClient().playerController.attackEntity(e.player, mov.entityHit);
+                        if (rayTraceResult != null && rayTraceResult.entityHit != null && rayTraceResult.entityHit != e.player && rayTraceResult.entityHit.hurtResistantTime == 0) {
+                            FMLClientHandler.instance().getClient().playerController.attackEntity(e.player, rayTraceResult.entityHit);
                         }
                     }
                 }
