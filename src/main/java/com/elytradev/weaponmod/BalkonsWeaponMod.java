@@ -5,6 +5,7 @@ import com.elytradev.weaponmod.entity.EntityDummy;
 import com.elytradev.weaponmod.entity.projectile.*;
 import com.elytradev.weaponmod.entity.projectile.dispense.*;
 import com.elytradev.weaponmod.item.*;
+import com.elytradev.weaponmod.network.WeaponNetworking;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -22,6 +23,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.logging.log4j.Logger;
+
+//TODO: WHY IS ALL OF THIS IN THE MOD CLASS OH MY GOD WHY
 
 @Mod(modid = BalkonsWeaponMod.MOD_ID, name = BalkonsWeaponMod.MOD_NAME, version = BalkonsWeaponMod.MOD_VERSION)
 public class BalkonsWeaponMod {
@@ -102,14 +105,10 @@ public class BalkonsWeaponMod {
     public static Item flintlockPistol;
 
     public WeaponModConfig modConfig;
-    public WMMessagePipeline messagePipeline;
-
-    public BalkonsWeaponMod() {
-        messagePipeline = new WMMessagePipeline();
-    }
 
     @EventHandler
     public void preInitMod(FMLPreInitializationEvent event) {
+        WeaponNetworking.init();
         modLog = event.getModLog();
 
         modConfig = new WeaponModConfig(new Configuration(event.getSuggestedConfigurationFile()));
