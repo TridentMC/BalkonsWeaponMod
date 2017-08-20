@@ -42,8 +42,7 @@ public class MessageExplosion extends Message {
     @Override
     protected void handle(EntityPlayer player) {
         World world = FMLClientHandler.instance().getWorldClient();
-        AdvancedExplosion expl = new AdvancedExplosion(world, null, x, y, z, size);
-        expl.setAffectedBlockPositions(affectedBlocks);
+        AdvancedExplosion expl = new AdvancedExplosion(world, null, x, y, z, size, affectedBlocks);
         expl.doParticleExplosion(smallParticles, bigParticles);
     }
 }

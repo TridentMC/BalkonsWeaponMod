@@ -7,11 +7,6 @@ public class WMCommonProxy {
         MinecraftForge.EVENT_BUS.register(new WMCommonEventHandler());
     }
 
-    public void registerPackets(WMMessagePipeline pipeline) {
-        pipeline.registerPacket(MsgCannonFire.class);
-        pipeline.registerPacket(MsgExplosion.class);
-    }
-
     public void registerIcons() {
     }
 
