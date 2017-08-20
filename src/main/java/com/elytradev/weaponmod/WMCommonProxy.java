@@ -1,8 +1,5 @@
 package com.elytradev.weaponmod;
 
-import com.elytradev.weaponmod.network.MsgCannonFire;
-import com.elytradev.weaponmod.network.MsgExplosion;
-import com.elytradev.weaponmod.network.WMMessagePipeline;
 import net.minecraftforge.common.MinecraftForge;
 
 public class WMCommonProxy {

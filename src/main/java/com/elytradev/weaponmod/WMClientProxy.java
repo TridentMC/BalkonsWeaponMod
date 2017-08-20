@@ -2,9 +2,7 @@ package com.elytradev.weaponmod;
 
 import com.elytradev.weaponmod.entity.EntityCannon;
 import com.elytradev.weaponmod.entity.EntityDummy;
-import ckathode.weaponmod.entity.projectile.*;
-import com.elytradev.weaponmod.network.WMMessagePipeline;
-import ckathode.weaponmod.render.*;
+
 import com.elytradev.weaponmod.entity.projectile.*;
 import com.elytradev.weaponmod.render.*;
 import net.minecraftforge.client.MinecraftForgeClient;

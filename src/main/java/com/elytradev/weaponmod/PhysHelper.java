@@ -1,6 +1,5 @@
 package com.elytradev.weaponmod;
 
-import com.elytradev.weaponmod.network.MsgExplosion;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;

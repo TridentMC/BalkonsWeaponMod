@@ -2,7 +2,6 @@ package com.elytradev.weaponmod;
 
 import com.elytradev.weaponmod.entity.EntityCannon;
 import com.elytradev.weaponmod.entity.EntityDummy;
-import com.elytradev.weaponmod.network.WMMessagePipeline;
 import com.elytradev.weaponmod.entity.projectile.*;
 import com.elytradev.weaponmod.entity.projectile.dispense.*;
 import com.elytradev.weaponmod.item.*;

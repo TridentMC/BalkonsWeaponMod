@@ -5,7 +5,6 @@ import com.elytradev.weaponmod.item.ExtendedReachHelper;
 import com.elytradev.weaponmod.item.IExtendedReachItem;
 import com.elytradev.weaponmod.item.IItemWeapon;
 import com.elytradev.weaponmod.item.RangedComponent;
-import com.elytradev.weaponmod.network.MsgCannonFire;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;

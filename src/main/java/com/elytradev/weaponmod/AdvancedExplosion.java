@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkPosition;
@@ -26,8 +27,8 @@ public class AdvancedExplosion extends Explosion {
         worldObj = world;
     }
 
-    public void setAffectedBlockPositions(List<ChunkPosition> list) {
-        affectedBlockPositions = list;
+    public void setAffectedBlockPositions(List<BlockPos> list) {
+        setAffectedBlockPositions(list);
         blocksCalculated = true;
     }
 
