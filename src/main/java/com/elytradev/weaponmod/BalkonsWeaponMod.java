@@ -2,9 +2,6 @@ package com.elytradev.weaponmod;
 
 import com.elytradev.weaponmod.entity.EntityCannon;
 import com.elytradev.weaponmod.entity.EntityDummy;
-import ckathode.weaponmod.entity.projectile.*;
-import ckathode.weaponmod.entity.projectile.dispense.*;
-import ckathode.weaponmod.item.*;
 import com.elytradev.weaponmod.network.WMMessagePipeline;
 import com.elytradev.weaponmod.entity.projectile.*;
 import com.elytradev.weaponmod.entity.projectile.dispense.*;
@@ -169,7 +166,7 @@ public class BalkonsWeaponMod {
             spearStone = new ItemMelee("spear.stone", new MeleeCompSpear(Item.ToolMaterial.STONE));
             spearSteel = new ItemMelee("spear.iron", new MeleeCompSpear(Item.ToolMaterial.IRON));
             spearGold = new ItemMelee("spear.gold", new MeleeCompSpear(Item.ToolMaterial.GOLD));
-            spearDiamond = new ItemMelee("spear.diamond", new MeleeCompSpear(Item.ToolMaterial.EMERALD));
+            spearDiamond = new ItemMelee("spear.diamond", new MeleeCompSpear(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("halberd")) {
@@ -177,7 +174,7 @@ public class BalkonsWeaponMod {
             halberdStone = new ItemMelee("halberd.stone", new MeleeCompHalberd(Item.ToolMaterial.STONE));
             halberdSteel = new ItemMelee("halberd.iron", new MeleeCompHalberd(Item.ToolMaterial.IRON));
             halberdGold = new ItemMelee("halberd.gold", new MeleeCompHalberd(Item.ToolMaterial.GOLD));
-            halberdDiamond = new ItemMelee("halberd.diamond", new MeleeCompHalberd(Item.ToolMaterial.EMERALD));
+            halberdDiamond = new ItemMelee("halberd.diamond", new MeleeCompHalberd(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("battleaxe")) {
@@ -185,7 +182,7 @@ public class BalkonsWeaponMod {
             battleaxeStone = new ItemMelee("battleaxe.stone", new MeleeCompBattleaxe(Item.ToolMaterial.STONE));
             battleaxeSteel = new ItemMelee("battleaxe.iron", new MeleeCompBattleaxe(Item.ToolMaterial.IRON));
             battleaxeGold = new ItemMelee("battleaxe.gold", new MeleeCompBattleaxe(Item.ToolMaterial.GOLD));
-            battleaxeDiamond = new ItemMelee("battleaxe.diamond", new MeleeCompBattleaxe(Item.ToolMaterial.EMERALD));
+            battleaxeDiamond = new ItemMelee("battleaxe.diamond", new MeleeCompBattleaxe(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("knife")) {
@@ -193,7 +190,7 @@ public class BalkonsWeaponMod {
             knifeStone = new ItemMelee("knife.stone", new MeleeCompKnife(Item.ToolMaterial.STONE));
             knifeSteel = new ItemMelee("knife.iron", new MeleeCompKnife(Item.ToolMaterial.IRON));
             knifeGold = new ItemMelee("knife.gold", new MeleeCompKnife(Item.ToolMaterial.GOLD));
-            knifeDiamond = new ItemMelee("knife.diamond", new MeleeCompKnife(Item.ToolMaterial.EMERALD));
+            knifeDiamond = new ItemMelee("knife.diamond", new MeleeCompKnife(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("warhammer")) {
@@ -201,7 +198,7 @@ public class BalkonsWeaponMod {
             warhammerStone = new ItemMelee("warhammer.stone", new MeleeCompWarhammer(Item.ToolMaterial.STONE));
             warhammerSteel = new ItemMelee("warhammer.iron", new MeleeCompWarhammer(Item.ToolMaterial.IRON));
             warhammerGold = new ItemMelee("warhammer.gold", new MeleeCompWarhammer(Item.ToolMaterial.GOLD));
-            warhammerDiamond = new ItemMelee("warhammer.diamond", new MeleeCompWarhammer(Item.ToolMaterial.EMERALD));
+            warhammerDiamond = new ItemMelee("warhammer.diamond", new MeleeCompWarhammer(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("flail")) {
@@ -209,7 +206,7 @@ public class BalkonsWeaponMod {
             flailStone = new ItemFlail("flail.stone", Item.ToolMaterial.STONE);
             flailSteel = new ItemFlail("flail.iron", Item.ToolMaterial.IRON);
             flailGold = new ItemFlail("flail.gold", Item.ToolMaterial.GOLD);
-            flailDiamond = new ItemFlail("flail.diamond", Item.ToolMaterial.EMERALD);
+            flailDiamond = new ItemFlail("flail.diamond", Item.ToolMaterial.DIAMOND);
         }
 
         if (modConfig.isEnabled("katana")) {
@@ -217,7 +214,7 @@ public class BalkonsWeaponMod {
             katanaStone = new ItemMelee("katana.stone", new MeleeComponent(MeleeComponent.MeleeSpecs.KATANA, Item.ToolMaterial.STONE));
             katanaSteel = new ItemMelee("katana.iron", new MeleeComponent(MeleeComponent.MeleeSpecs.KATANA, Item.ToolMaterial.IRON));
             katanaGold = new ItemMelee("katana.gold", new MeleeComponent(MeleeComponent.MeleeSpecs.KATANA, Item.ToolMaterial.GOLD));
-            katanaDiamond = new ItemMelee("katana.diamond", new MeleeComponent(MeleeComponent.MeleeSpecs.KATANA, Item.ToolMaterial.EMERALD));
+            katanaDiamond = new ItemMelee("katana.diamond", new MeleeComponent(MeleeComponent.MeleeSpecs.KATANA, Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("boomerang")) {
@@ -225,7 +222,7 @@ public class BalkonsWeaponMod {
             boomerangStone = new ItemMelee("boomerang.stone", new MeleeCompBoomerang(Item.ToolMaterial.STONE));
             boomerangSteel = new ItemMelee("boomerang.iron", new MeleeCompBoomerang(Item.ToolMaterial.IRON));
             boomerangGold = new ItemMelee("boomerang.gold", new MeleeCompBoomerang(Item.ToolMaterial.GOLD));
-            boomerangDiamond = new ItemMelee("boomerang.diamond", new MeleeCompBoomerang(Item.ToolMaterial.EMERALD));
+            boomerangDiamond = new ItemMelee("boomerang.diamond", new MeleeCompBoomerang(Item.ToolMaterial.DIAMOND));
         }
 
         if (modConfig.isEnabled("firerod")) {
@@ -252,7 +249,7 @@ public class BalkonsWeaponMod {
                 bayonetStone = new ItemMusket("musketbayonet.stone", new MeleeCompKnife(Item.ToolMaterial.STONE), knifeStone);
                 bayonetSteel = new ItemMusket("musketbayonet.iron", new MeleeCompKnife(Item.ToolMaterial.IRON), knifeSteel);
                 bayonetGold = new ItemMusket("musketbayonet.gold", new MeleeCompKnife(Item.ToolMaterial.GOLD), knifeGold);
-                bayonetDiamond = new ItemMusket("musketbayonet.diamond", new MeleeCompKnife(Item.ToolMaterial.EMERALD), knifeDiamond);
+                bayonetDiamond = new ItemMusket("musketbayonet.diamond", new MeleeCompKnife(Item.ToolMaterial.DIAMOND), knifeDiamond);
             }
 
             musket = new ItemMusket("musket", new MeleeCompNone(), null);

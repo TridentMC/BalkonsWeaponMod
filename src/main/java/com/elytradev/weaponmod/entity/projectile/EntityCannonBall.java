@@ -9,10 +9,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityCannonBall extends EntityProjectile {
+    private double yOffset = 0.0F;
+    
     public EntityCannonBall(World world) {
         super(world);
     }
@@ -25,14 +27,14 @@ public class EntityCannonBall extends EntityProjectile {
 
     public EntityCannonBall(World world, EntityCannon entitycannon, boolean superPowered) {
         this(world);
-        shootingEntity = entitycannon.riddenByEntity;
-        if (entitycannon.riddenByEntity instanceof EntityLivingBase) {
-            setPickupModeFromEntity((EntityLivingBase) entitycannon.riddenByEntity);
+        shootingEntity = entitycannon.getControllingPassenger();
+        if (entitycannon.getControllingPassenger() instanceof EntityLivingBase) {
+            setPickupModeFromEntity((EntityLivingBase) entitycannon.getControllingPassenger());
         } else {
             setPickupMode(PICKUP_ALL);
         }
         setSize(0.5F, 0.5F);
-        setLocationAndAngles(entitycannon.posX, entitycannon.posY + 1.0D, entitycannon.posZ, entitycannon.riddenByEntity.rotationYaw, entitycannon.riddenByEntity.rotationPitch);
+        setLocationAndAngles(entitycannon.posX, entitycannon.posY + 1.0D, entitycannon.posZ, entitycannon.getControllingPassenger().rotationYaw, entitycannon.getControllingPassenger().rotationPitch);
         posX -= MathHelper.cos((rotationYaw / 180F) * 3.141593F) * 0.16F;
         posY -= 0.1D;
         posZ -= MathHelper.sin((rotationYaw / 180F) * 3.141593F) * 0.16F;
@@ -56,18 +58,18 @@ public class EntityCannonBall extends EntityProjectile {
         double amount = 8D;
         if (speed > 1.0D) {
             for (int i1 = 1; i1 < amount; i1++) {
-                worldObj.spawnParticle("smoke", posX + (motionX * i1) / amount, posY + (motionY * i1) / amount, posZ + (motionZ * i1) / amount, 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", posX + (motionX * i1) / amount, posY + (motionY * i1) / amount, posZ + (motionZ * i1) / amount, 0.0D, 0.0D, 0.0D);
             }
         }
     }
 
     public void createCrater() {
-        if (worldObj.isRemote || !inGround || isInWater()) return;
+        if (world.isRemote || !inGround || isInWater()) return;
 
         setDead();
 
         float f = getIsCritical() ? 5.0F : 2.5F;
-        PhysHelper.createAdvancedExplosion(worldObj, this, posX, posY, posZ, f, BalkonsWeaponMod.instance.modConfig.cannonDoesBlockDamage, true);
+        PhysHelper.createAdvancedExplosion(world, this, posX, posY, posZ, f, BalkonsWeaponMod.instance.modConfig.cannonDoesBlockDamage, true);
     }
 
     @Override
@@ -79,20 +81,20 @@ public class EntityCannonBall extends EntityProjectile {
             damagesource = WeaponDamageSource.causeProjectileWeaponDamage(this, shootingEntity);
         }
         if (entity.attackEntityFrom(damagesource, 30)) {
-            worldObj.playSoundAtEntity(this, "random.damage.hurtflesh", 1.0F, 1.2F / (rand.nextFloat() * 0.4F + 0.7F));
+            world.playSoundAtEntity(this, "random.damage.hurtflesh", 1.0F, 1.2F / (rand.nextFloat() * 0.4F + 0.7F));
         }
     }
 
     @Override
-    public void onGroundHit(MovingObjectPosition mop) {
-        xTile = mop.blockX;
-        yTile = mop.blockY;
-        zTile = mop.blockZ;
-        inTile = worldObj.getBlock(xTile, yTile, zTile);
-        inData = worldObj.getBlockMetadata(xTile, yTile, zTile);
-        motionX = (float) (mop.hitVec.xCoord - posX);
-        motionY = (float) (mop.hitVec.yCoord - posY);
-        motionZ = (float) (mop.hitVec.zCoord - posZ);
+    public void onGroundHit(RayTraceResult traceResult) {
+        xTile = traceResult.getBlockPos().getX();
+        yTile = traceResult.getBlockPos().getY();
+        zTile = traceResult.getBlockPos().getZ();
+        inTile = world.getBlock(xTile, yTile, zTile);
+        inData = world.getBlockMetadata(xTile, yTile, zTile);
+        motionX = (float) (traceResult.hitVec.xCoord - posX);
+        motionY = (float) (traceResult.hitVec.yCoord - posY);
+        motionZ = (float) (traceResult.hitVec.zCoord - posZ);
         float f1 = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
         posX -= (motionX / f1) * 0.05D;
         posY -= (motionY / f1) * 0.05D;
@@ -100,7 +102,7 @@ public class EntityCannonBall extends EntityProjectile {
         inGround = true;
 
         if (inTile != null) {
-            inTile.onEntityCollidedWithBlock(worldObj, xTile, yTile, zTile, this);
+            inTile.onEntityCollidedWithBlock(world, xTile, yTile, zTile, this);
         }
 
         createCrater();
@@ -129,5 +131,10 @@ public class EntityCannonBall extends EntityProjectile {
     @Override
     public float getShadowSize() {
         return 0.5F;
+    }
+
+    @Override
+    public double getYOffset() {
+        return yOffset;
     }
 }

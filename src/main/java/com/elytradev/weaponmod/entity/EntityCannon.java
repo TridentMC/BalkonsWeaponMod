@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -49,11 +50,11 @@ public class EntityCannon extends EntityBoat {
 
     @Override
     public AxisAlignedBB getCollisionBox(Entity entity) {
-        return entity.boundingBox;
+        return entity.getEntityBoundingBox();
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox() {
+    public AxisAlignedBB getEntityBoundingBox() {
         return boundingBox;
     }
 

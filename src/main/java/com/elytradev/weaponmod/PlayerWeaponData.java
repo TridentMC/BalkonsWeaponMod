@@ -1,7 +1,7 @@
 package com.elytradev.weaponmod;
 
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.datasync.EntityDataManager;
 
 public abstract class PlayerWeaponData {
     public static final int BOOLEANS = 26, WARHAMMER_LAST_SMASH_TICKS = 27, FLAIL_ENTITY_ID = 28;
@@ -10,29 +10,29 @@ public abstract class PlayerWeaponData {
     public static void initPlayerWeaponData(EntityPlayer player) {
         String playername = getPlayerName(player);
         BalkonsWeaponMod.modLog.trace("Initializing DataWatcher values for " + playername);
-        DataWatcher datawatcher = player.getDataWatcher();
+        EntityDataManager dataManager = player.getDataManager();
         try {
-            datawatcher.getWatchableObjectInt(BOOLEANS);
+            dataManager.getWatchableObjectInt(BOOLEANS);
             BalkonsWeaponMod.modLog.warn("DataWatcher ID conflict for " + playername + " @ " + BOOLEANS);
         } catch (NullPointerException e) {
         } finally {
-            datawatcher.addObject(BOOLEANS, Integer.valueOf(0));
+            dataManager.addObject(BOOLEANS, Integer.valueOf(0));
         }
 
         try {
-            datawatcher.getWatchableObjectInt(WARHAMMER_LAST_SMASH_TICKS);
+            dataManager.getWatchableObjectInt(WARHAMMER_LAST_SMASH_TICKS);
             BalkonsWeaponMod.modLog.warn("DataWatcher ID conflict for " + playername + " @ " + WARHAMMER_LAST_SMASH_TICKS);
         } catch (NullPointerException e) {
         } finally {
-            datawatcher.addObject(WARHAMMER_LAST_SMASH_TICKS, Integer.valueOf(player.ticksExisted));
+            dataManager.addObject(WARHAMMER_LAST_SMASH_TICKS, Integer.valueOf(player.ticksExisted));
         }
 
         try {
-            datawatcher.getWatchableObjectInt(FLAIL_ENTITY_ID);
+            dataManager.getWatchableObjectInt(FLAIL_ENTITY_ID);
             BalkonsWeaponMod.modLog.warn("DataWatcher ID conflict for " + playername + " @ " + FLAIL_ENTITY_ID);
         } catch (NullPointerException e) {
         } finally {
-            datawatcher.addObject(FLAIL_ENTITY_ID, Integer.valueOf(0));
+            dataManager.addObject(FLAIL_ENTITY_ID, Integer.valueOf(0));
         }
     }
 
