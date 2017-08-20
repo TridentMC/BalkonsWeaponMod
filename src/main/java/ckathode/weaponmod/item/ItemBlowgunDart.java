@@ -1,7 +1,7 @@
 package ckathode.weaponmod.item;
 
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,61 +12,51 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBlowgunDart extends WMItem
-{
-	public ItemBlowgunDart(String id)
-	{
-		super(id);
-		setHasSubtypes(true);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public void getSubItems(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
-	{
-		for (int j = 0; j < DartType.dartTypes.length; ++j)
-		{
-			if (DartType.dartTypes[j] != null)
-			{
-				list.add(new ItemStack(item, 1, j));
-			}
-		}
-	}
-	
-	@Override
-	public IIcon getIconFromDamage(int damage)
-	{
-		return (damage >= 0 && damage < DartType.dartTypes.length && DartType.dartTypes[damage] != null) ? DartType.dartTypes[damage].itemIcon : itemIcon;
-	}
-	
-	@Override
-	public void registerIcons(IIconRegister iconregister)
-	{
-		itemIcon = iconregister.registerIcon(getIconString());
-		for (DartType type : DartType.dartTypes)
-		{
-			if (type != null)
-			{
-				type.itemIcon = iconregister.registerIcon("weaponmod:" + type.typeName);
-			}
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, @SuppressWarnings("rawtypes") List list, boolean flag)
-	{
-		DartType type = DartType.getDartTypeFromStack(itemstack);
-		if (type == null) return;
-		PotionEffect potioneffect = type.potionEffect;
-		Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
-		
-		String s = StatCollector.translateToLocal(potioneffect.getEffectName()).trim();
-		
+import java.util.List;
+
+public class ItemBlowgunDart extends WMItem {
+    public ItemBlowgunDart(String id) {
+        super(id);
+        setHasSubtypes(true);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list) {
+        for (int j = 0; j < DartType.dartTypes.length; ++j) {
+            if (DartType.dartTypes[j] != null) {
+                list.add(new ItemStack(item, 1, j));
+            }
+        }
+    }
+
+    @Override
+    public IIcon getIconFromDamage(int damage) {
+        return (damage >= 0 && damage < DartType.dartTypes.length && DartType.dartTypes[damage] != null) ? DartType.dartTypes[damage].itemIcon : itemIcon;
+    }
+
+    @Override
+    public void registerIcons(IIconRegister iconregister) {
+        itemIcon = iconregister.registerIcon(getIconString());
+        for (DartType type : DartType.dartTypes) {
+            if (type != null) {
+                type.itemIcon = iconregister.registerIcon("weaponmod:" + type.typeName);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, @SuppressWarnings("rawtypes") List list, boolean flag) {
+        DartType type = DartType.getDartTypeFromStack(itemstack);
+        if (type == null) return;
+        PotionEffect potioneffect = type.potionEffect;
+        Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
+
+        String s = StatCollector.translateToLocal(potioneffect.getEffectName()).trim();
+
 		/*
 		Map map = potion.func_111186_k();
 		
@@ -83,23 +73,19 @@ public class ItemBlowgunDart extends WMItem
 			}
 		}
 		*/
-		
-		if (potioneffect.getAmplifier() > 0)
-		{
-			s += " " + StatCollector.translateToLocal("potion.potency." + potioneffect.getAmplifier()).trim();
-		}
-		
-		if (potioneffect.getDuration() > 20)
-		{
-			s += " (" + Potion.getDurationString(potioneffect) + ")";
-		}
-		
-		if (potion.isBadEffect())
-		{
-			list.add(EnumChatFormatting.RED + s);
-		} else
-		{
-			list.add(EnumChatFormatting.GRAY + s);
-		}
-	}
+
+        if (potioneffect.getAmplifier() > 0) {
+            s += " " + StatCollector.translateToLocal("potion.potency." + potioneffect.getAmplifier()).trim();
+        }
+
+        if (potioneffect.getDuration() > 20) {
+            s += " (" + Potion.getDurationString(potioneffect) + ")";
+        }
+
+        if (potion.isBadEffect()) {
+            list.add(EnumChatFormatting.RED + s);
+        } else {
+            list.add(EnumChatFormatting.GRAY + s);
+        }
+    }
 }
